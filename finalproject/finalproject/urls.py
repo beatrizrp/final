@@ -3,22 +3,27 @@ Definition of urls for finalproject.
 """
 
 from datetime import datetime
+from app.views import *
+from app import views
 from django.conf.urls import url
 import django.contrib.auth.views
+# import app.views as core_views
 
 import app.forms
 import app.views
 
 # Uncomment the next lines to enable the admin:
-# from django.conf.urls import include
-# from django.contrib import admin
-# admin.autodiscover()
+from django.conf.urls import include
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = [
     # Examples:
     url(r'^$', app.views.home, name='home'),
     url(r'^contact$', app.views.contact, name='contact'),
     url(r'^about', app.views.about, name='about'),
+    url(r'^tournaments/$', app.views.tournaments, name='tournaments'),
+    url(r'^signup/$', app.views.signup, name='signup'),
     url(r'^login/$',
         django.contrib.auth.views.login,
         {
@@ -39,8 +44,8 @@ urlpatterns = [
         name='logout'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 ]

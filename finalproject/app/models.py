@@ -1,4 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from django.utils.translation import gettext_lazy as _
 
 TYPES = (
     (0, 'Fuerza'),
@@ -6,28 +12,21 @@ TYPES = (
     (2, 'Resistencia')
 )
 
-class User(models.Model):
-    name = models.CharField('Nombre', max_lenght = 30)
-    surname = models.CharField('Nombre', max_lenght = 30)
-    country = models.CharField('País', max_lenght = 50)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Usuario'
-
 
 class Fighter(models.Model):
-    userId = models.ForeignKey(User, verbose_name='Id Usuario', related_name= 'userId', on_delete= models.CASCADE)
+    userId = models.ForeignKey(User, verbose_name='Id Usuario', on_delete= models.CASCADE)
     alias = models.CharField('Alias', max_length = 20)
-    strenght = models.IntegerField('Fuerza', default= 0)
-    dexterity = models.IntegerField('Destreza', default= 0)
-    resistance = models.IntegerField('Resistencia', default= 0)
+    strength = models.IntegerField('Fuerza', default= 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
+    dexterity = models.IntegerField('Destreza', default= 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
+    resistance = models.IntegerField('Resistencia', default= 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
 
     def __str__(self):
         return self.alias
 
+    def validateStats(a, b, c):
+        if a+b+c > 10:
+            return('Las estadisticas no pueden sumar más de 10')
+    
     class Meta:
         verbose_name = 'Luchador'
         verbose_name_plural = 'Luchadores'
@@ -38,9 +37,9 @@ class Tournament(models.Model):
     start_date = models.DateField('Fecha de Inicio')
     numberPlayers = models.IntegerField('Nº Jugadores', default = 0)
     type = models.IntegerField('Tipo', default= 0, choices= TYPES)
-    strengthWeight = models.IntegerField('Peso Fuerza', default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
-    dexterityWeight = models.IntegerField('Peso Destreza', default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
-    resistancehWeight = models.IntegerField('Peso Resistencia', default = 0, validators=[MaxValueValidator(5), MinValueValidator(0)])
+    strengthWeigth = models.IntegerField('Peso Fuerza', default = 0, validators=[MaxValueValidator(100), MinValueValidator(0)])
+    dexterityWeigth = models.IntegerField('Peso Destreza', default = 0, validators=[MaxValueValidator(100), MinValueValidator(0)])
+    resistanceWeigth = models.IntegerField('Peso Resistencia', default = 0, validators=[MaxValueValidator(100), MinValueValidator(0)])
     classified1 = models.ForeignKey(Fighter, verbose_name = '1º clasificado',related_name='tournamentClassified1', on_delete= models.CASCADE)
     classified2 = models.ForeignKey(Fighter, verbose_name = '2º clasificado',related_name='tournamentClassified2', on_delete= models.CASCADE)
     classified3 = models.ForeignKey(Fighter, verbose_name = '3º clasificado',related_name='tournamentClassified3', on_delete= models.CASCADE)

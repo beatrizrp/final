@@ -33,8 +33,14 @@
     <Compile Include="app\admin.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="app\apps.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\forms.py" />
     <Compile Include="app\models.py" />
+    <Compile Include="app\serializers.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\tests.py" />
     <Compile Include="app\views.py" />
     <Compile Include="app\__init__.py" />
@@ -58,6 +64,18 @@
     <Folder Include="finalproject\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\templates\app\combats.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="app\templates\app\fighters.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="app\templates\app\signup.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="app\templates\app\tournaments.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />
