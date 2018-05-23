@@ -17,12 +17,17 @@ from django.conf.urls import include
 from django.contrib import admin
 admin.autodiscover()
 
+from django.conf.urls import url
+from app import views
+
 urlpatterns = [
     # Examples:
     url(r'^$', app.views.home, name='home'),
     url(r'^contact$', app.views.contact, name='contact'),
     url(r'^about', app.views.about, name='about'),
     url(r'^tournaments/$', app.views.tournaments, name='tournaments'),
+    url(r'^newtournament/$', app.views.newTournament, name='newtournament'),
+    url(r'^newfighter/$', app.views.newFighter, name='newfighter'),
     url(r'^signup/$', app.views.signup, name='signup'),
     url(r'^login/$',
         django.contrib.auth.views.login,

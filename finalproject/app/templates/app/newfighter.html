@@ -1,0 +1,6 @@
+
+<form id="formulario" method="post" enctype="multipart/form-data" action="{% url 'newfighter' %}" >
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Crear Luchador"/>
+</form>

@@ -55,6 +55,10 @@ MIDDLEWARE_CLASSES = [
 
 ROOT_URLCONF = 'finalproject.urls'
 
+PROJECT_PATH = os.path.split(os.path.abspath(os.path.dirname(__file__)))[0]
+
+TEMPLATE_DIRS = (os.path.join(PROJECT_PATH, "finalproject/app/templates/app"),)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

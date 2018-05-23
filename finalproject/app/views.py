@@ -3,13 +3,23 @@ Definition of views.
 """
 
 from django.shortcuts import render
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from datetime import datetime
 
+
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response, get_object_or_404
+from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
+
+from .forms import NewTournamentForm, NewFighterForm
+
+from .models import Fighter, Tournament, Combat
+
+from django.utils import timezone
+
 
 def home(request):
     """Renders the home page."""
@@ -62,15 +72,38 @@ def tournaments(request):
     )
 
 def signup(request):
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/signup.html',
+        {
+            'title':'Tournaments',
+            'message':'Tournaments page',
+            'year':datetime.now().year,
+        }
+    )
+
+
+
+def newTournament(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = NewTournamentForm(request.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('home')
+            ntorneo = form.save()
+            return HttpResponseRedirect('/')
     else:
-        form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+        form = NewTournamentForm()
+    return render(request, 'app/newtournament.html', {'form':form})
+
+def newFighter(request):
+    if request.method == 'POST':
+        form = NewFighterForm(request.POST)
+        if form.is_valid():
+            ntorneo = form.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = NewFighterForm()
+    return render(request, 'app/newfighter.html', {'form':form})
+   
+
+

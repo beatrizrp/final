@@ -9,7 +9,7 @@ class FighterAdmin(admin.ModelAdmin):
 
 class TournamentAdmin(admin.ModelAdmin):
     list_display = ['name', 'create_date', 'start_date', 'numberPlayers', 'type', 'strengthWeigth', 'dexterityWeigth', 'resistanceWeigth',
-                    'classified1', 'classified2', 'classified3']
+                    'classified1', 'classified2']
     search_fields = ['name', 'create_date', 'start_date', 'classified1', 'classified2', 'classified3']
     list_filter = ['start_date', 'create_date', 'start_date' ]
 

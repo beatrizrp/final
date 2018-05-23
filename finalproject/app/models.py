@@ -22,10 +22,6 @@ class Fighter(models.Model):
 
     def __str__(self):
         return self.alias
-
-    def validateStats(a, b, c):
-        if a+b+c > 10:
-            return('Las estadisticas no pueden sumar más de 10')
     
     class Meta:
         verbose_name = 'Luchador'
@@ -42,14 +38,15 @@ class Tournament(models.Model):
     resistanceWeigth = models.IntegerField('Peso Resistencia', default = 0, validators=[MaxValueValidator(100), MinValueValidator(0)])
     classified1 = models.ForeignKey(Fighter, verbose_name = '1º clasificado',related_name='tournamentClassified1', on_delete= models.CASCADE)
     classified2 = models.ForeignKey(Fighter, verbose_name = '2º clasificado',related_name='tournamentClassified2', on_delete= models.CASCADE)
-    classified3 = models.ForeignKey(Fighter, verbose_name = '3º clasificado',related_name='tournamentClassified3', on_delete= models.CASCADE)
-
+    
 
     def __str__(self):
         return self.name
 
     class Meta:
         verbose_name = 'Torneo'
+
+
 
 class Combat(models.Model):
     tournament = models.ForeignKey(Tournament, verbose_name = 'Torneo', on_delete = models.CASCADE)
@@ -65,3 +62,6 @@ class Combat(models.Model):
 
     class Meta:
         verbose_name = 'Combate'
+
+
+
