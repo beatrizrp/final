@@ -1,1 +1,13 @@
+{% extends "app/layout.html" %}
 
+{% block content %}
+
+<h1>{{ view.title }}</h1>
+
+<ul>
+  {% for fighter in view.fighters %}
+    <li>{{ fighter.alias }}</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,6 +1,24 @@
+{% extends "app/layout.html" %}
 
-<form id="formulario" method="post" enctype="multipart/form-data" action="{% url 'newtournament' %}" >
+{% block content %}
+
+<h2>Crear Torneo</h2>
+
+<form id="formulario" method="post" enctype="multipart/form-data" action="{% url 'newtournament' %}" onchange="calculateFighters(), validateTournament()" >
     {% csrf_token %}
     {{form.as_p}}
-    <input type="submit" value="Crear Torneo"/>
+    <p id="textoJS">Necesitas 4 luchadores para este torneo.</p>
+    <p id="textopesos"></p>
+    <p id="textofg">.</p>
+    <input id ="crear_torneo" type="submit" value="Crear Torneo" class="btn btn-primary" disabled/>
 </form>
+
+{% endblock %}
+
+{% block scripts %}
+
+    {% load staticfiles %}
+
+<script src="{% static 'app/scripts/validatetournament.js' %}"></script>
+
+{% endblock %}

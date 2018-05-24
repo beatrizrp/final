@@ -11,7 +11,7 @@
                 <h4>Usa una cuenta local para logearte.</h4>
                 <hr />
                 <div class="form-group">
-                    <label for="id_username" class="col-md-2 control-label">User name</label>
+                    <label for="id_username" class="col-md-2 control-label">Usuario</label>
                     <div class="col-md-10">
                         {{ form.username }}
                     </div>
@@ -28,8 +28,11 @@
                         <input type="submit" value="Log in" class="btn btn-default" />
                     </div>
                 </div>
+                <div>
+                    <p>Si no tienes una cuenta, <a href="{% url 'signup' %}">crea una.</a></p>
+                </div>
                 {% if form.errors %}
-                <p class="validation-summary-errors">Please enter a correct user name and password.</p>
+                <p class="validation-summary-errors">Por favor introduce un user y una passsword correctos.</p>
                 {% endif %}
             </form>
         </section>
@@ -40,8 +43,6 @@
 </div>
 
 {% endblock %}
-
-
 {% block scripts %}
 
     {% load staticfiles %}

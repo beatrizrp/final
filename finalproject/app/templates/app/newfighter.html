@@ -1,6 +1,26 @@
+{% extends "app/layout.html" %}
 
-<form id="formulario" method="post" enctype="multipart/form-data" action="{% url 'newfighter' %}" >
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="Crear Luchador"/>
+{% block content %}
+
+<h2>Crear Luchador</h2>
+
+<form id="formulario" method="post" enctype="multipart/form-data" action="{% url 'newfighter' %}" onchange="validateFighter()">
+    <div class="form-group">
+        {% csrf_token %}
+        {{form.as_p}}
+    </div>
+    <p id="textoJS">Las estadisticas tienen que sumar 10 puntos en total.</p>
+    <p id="nouser"></</p>
+    <input type="button" onclick="getRandomName()" value="Nombre Aleatorio" class="btn btn-primary" />
+    <input type="submit" value="Crear Luchador" class="btn btn-primary" id="btn1" disabled/>
 </form>
+
+{% endblock %}
+
+{% block scripts %}
+
+    {% load staticfiles %}
+
+<script src="{% static 'app/scripts/validatefighter.js' %}"></script>
+
+{% endblock %}
