@@ -1,0 +1,18 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h1>{{ view.title }}</h1>
+
+{% csrf_token %}
+
+<table>
+        {% for key,v in data %}
+            <tr>
+                <td> {{ key }} : </td> <td> {{ value }} </td>
+            </tr>
+        {% endfor %}
+
+</table>
+
+{% endblock %}

@@ -4,7 +4,7 @@
 
 <h2>Crear Luchador</h2>
 
-<form id="formulario" method="post" enctype="multipart/form-data" action="{% url 'newfighter' %}" onchange="validateFighter()">
+<form id="formulario" method="post" enctype="multipart/form-data" action="{% url 'newfighter' %}" onchange="validateStats()">
     <div class="form-group">
         {% csrf_token %}
         {{form.as_p}}

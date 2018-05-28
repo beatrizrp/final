@@ -4,10 +4,15 @@
 
 <h1>{{ view.title }}</h1>
 
-<ul>
-  {% for tournament in view.tournaments %}
-    <li>{{ tournament }}</li>
+
+  {% for t in view.tournaments %}
+    <form method="post" enctype="multipart/form-data" action="{% url 'tournamentresult' t.id %}" >
+        {% csrf_token %}
+        <p><bold>{{ t.name }}</bold></p> 
+        <p>{{ t.start_date }}</p> 
+        <input type="submit" value="Celebrar Torneo {{t.id}}" class="btn btn-primary"/>
+    </form>
   {% endfor %}
-</ul>
 
 {% endblock %}
+

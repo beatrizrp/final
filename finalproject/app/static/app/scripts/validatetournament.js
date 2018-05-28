@@ -17,6 +17,8 @@ function validateTournament() {
 
     if (ok1 == true && ok2 == true) {
         document.getElementById('crear_torneo').disabled = false;
+    } else {
+        document.getElementById('crear_torneo').disabled = true;
     }
 }
 
@@ -31,7 +33,8 @@ function validateWeights() {
         ok1 = true;   
         document.getElementById('textopesos').innerHTML = "";
     }
-    else{
+    else {
+        ok1 = false;
         document.getElementById('textopesos').innerHTML = "Los pesos del torneo tienen que sumar 100.";
     }
 }
@@ -49,6 +52,7 @@ function validateFighters() {
 
     if (fg != fightersSelect) {
         document.getElementById('textofg').innerHTML = "Necesitas " + (fg - fightersSelect) + " luchadores más para este torneo."
+        ok2 = false;
     } else {
         document.getElementById('textofg').innerHTML = ""
         ok2 = true;

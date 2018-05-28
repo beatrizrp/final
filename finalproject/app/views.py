@@ -2,7 +2,6 @@
 Definition of views.
 """
 
-from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from datetime import datetime
@@ -21,6 +20,8 @@ from django.views.generic import ListView, DetailView
 from .models import Fighter, Tournament, Combat
 
 from django.utils import timezone
+
+from django.core.urlresolvers import reverse
 
 
 
@@ -65,9 +66,31 @@ def about(request):
 class TournamentsView(ListView):
     template_name = "app/tournaments.html"
     title = "Lista de Torneos"
+    model = Tournament
 
     def tournaments(self):
         return Tournament.objects.all()
+
+    def ctournament(request, t_id):
+        winners = Tournament.celebrateTournament(t_id)
+        return render(request, 'app/tournamentresult.html', {'data': winners})
+
+
+
+
+
+
+class FightersView(ListView):
+    template_name = "app/fighters.html"
+    title = "Lista de Luchadores"
+    model = Fighter
+
+    def fighters(self):
+        return Fighter.objects.all()
+
+
+
+
 
 def fighters(request):
     assert isinstance(request, HttpRequest)
@@ -75,7 +98,7 @@ def fighters(request):
         request,
         'app/fighters.html',
         {
-            'title':'FIghters',
+            'title':'Fighters',
             'message':'Fighters page',
             'year':datetime.now().year,
         }
@@ -115,6 +138,5 @@ def newFighter(request):
     else:
         form = NewFighterForm()
     return render(request, 'app/newfighter.html', {'form':form})
-   
 
 

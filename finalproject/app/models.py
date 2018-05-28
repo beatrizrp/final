@@ -6,6 +6,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
 
+import random 
+
 
 class Fighter(models.Model):
     userId = models.ForeignKey(User, verbose_name='Id Usuario', on_delete= models.CASCADE)
@@ -25,7 +27,7 @@ class Tournament(models.Model):
     name = models.CharField('Nombre', max_length = 25)
     create_date = models.DateField('Fecha de Creación')
     start_date = models.DateField('Fecha de Inicio')
-    numberRounds = models.IntegerField('Nº Rondas', default = 2, validators=[MaxValueValidator(8), MinValueValidator(1)])
+    numberRounds = models.IntegerField('Nº Rondas', default = 2, validators=[MinValueValidator(1)])
     strengthWeigth = models.IntegerField('Peso Fuerza', default = 0, validators=[MaxValueValidator(100), MinValueValidator(0)])
     dexterityWeigth = models.IntegerField('Peso Destreza', default = 0, validators=[MaxValueValidator(100), MinValueValidator(0)])
     resistanceWeigth = models.IntegerField('Peso Resistencia', default = 0, validators=[MaxValueValidator(100), MinValueValidator(0)])
@@ -40,26 +42,52 @@ class Tournament(models.Model):
     class Meta:
         verbose_name = 'Torneo'
 
-    def celebrateTournament():
-        pass
 
-    def generateDict():
-        dictFighters = {}
-        list1 = ['Thor', 'Luke Cage', 'Superman', 'Linterna Verde']
-        dictFighters += list1
+    def combat(L1, L2):
+        rL1 = 0
+        rL2 = 0
 
-        i = 0
-        count = 0
-        while (count < len(list1)):
-            listaTemp = [list1[i], list1[i+1]]
-            count +=2
-            i= i + 1
-            print(listaTemp)
+        while ((rL1<2) or (rL2 < 2)):
+            pL1 = random.randint(0, L1.strength) * Tournament.strengthWeigth + random.randint(0, L1.dexterity) * Tournament.dexterityWeigth + random.randint(0, L1.resistance) * Tournament.resistanceWeigth
+            pL2 = random.randint(0, L2.strength) * Tournament.strengthWeigth + random.randint(0, L2.dexterity) * Tournament.dexterityWeigth + random.randint(0, L2.resistance) * Tournament.resistanceWeigth
 
-            """combat(listaTemp)"""
+            print(pL1)
+            print(pL2)
+
+            if (pL1 > pL2):
+                rL1 += 1
+                print('Luchador 1 gana la ronda')
+                if (rL1 == 2):
+                    print('Luchador 1 gana el combate')
+                    return L1
+            else:
+                if (pL2 > pL1):
+                   rL2 += 1
+                   print('Luchador 2 gana la ronda')
+                   if (rL2 == 2):
+                    print('Luchador 2 gana el combate')
+                    return L2
 
 
-                    
+    def celebrateTournament(t_id):
+        print('Empezamos')
+        DF = dict()
+        r = 1
+        t = Tournament(t_id)
+        f = t.fighters.all()
+        dup={r:list(f)}
+        DF.update(dup)
+          
+        while r <= t.numberRounds:
+            l = 1
+            dp={r+1:list()}
+            DF.update(dp)
+            while l <= len(DF[r]):
+                lg = []
+                lg += [t.combat(l, l +1) for l in DF[r][:len(DF[r]):2]]
+            r += 1
+        return DF
+
 
 
 

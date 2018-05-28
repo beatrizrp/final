@@ -80,6 +80,9 @@
     <Content Include="app\templates\app\signup.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="app\templates\app\tournamentresult.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="app\templates\app\tournaments.html">
       <SubType>Code</SubType>
     </Content>

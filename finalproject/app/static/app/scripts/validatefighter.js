@@ -21,20 +21,7 @@ function getRandomName() {
     
 request.send();
 }
-var ok1 = false;
-var ok2 = false;
 
-function validateFighter(){
-    validateStats();
-    searchUser();
-
-    console.log(ok1);
-    console.log(ok2);
-
-    if (ok1 == true && ok2 == true) {
-        document.getElementById('btn1').disabled = false;
-    }
-}
 
 /* Función para validar que las estadisticas no suman más de 10 */
 
@@ -44,24 +31,8 @@ function validateStats() {
     var d = +document.getElementById('id_resistance').value;
 
     if ((f + r + d) == 10) {
-        ok1 = true;
-    }
-}
-
-/* Unir login y usuario*/
-
-function searchUser() {
-    user = document.getElementById('hiuser').innerText;
-    console.log(user);
-    a = user.lenght
-    console.log(a)
-    userSplit = user.split(5, a);
-
-    console.log(userSplit)
-
-    if (userSplit != null) {
-        document.getElementById('nouser').innerHTML = "Necesitas un usuario para loguearte";
+        document.getElementById('btn1').disabled = false;
     } else {
-        ok2 = true;
+        document.getElementById('btn1').disabled = true;
     }
 }

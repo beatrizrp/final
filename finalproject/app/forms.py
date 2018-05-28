@@ -46,5 +46,3 @@ class NewFighterForm(forms.ModelForm):
         model = Fighter
         fields = ['userId', 'alias', 'strength', 'dexterity', 'resistance']
 
-
-
