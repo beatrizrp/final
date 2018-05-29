@@ -43,13 +43,39 @@ class Tournament(models.Model):
         verbose_name = 'Torneo'
 
 
-    def combat(L1, L2):
+    def celebrateTournament(t_id):
+        print('Empezamos')
+        DF = dict()
+        r = 1
+        t = Tournament.objects.get(id=t_id)
+        f = t.fighters.all()
+        dup={r:list(f)}
+        DF.update(dup)
+        
+          
+        while r <= t.numberRounds:
+            l = 0
+            dp={r+1:list()}
+            DF.update(dp)
+            while l < len(DF[r])-1:                
+                lg = (t.combat(DF[r][l], DF[r][l+1]))  
+                DF[r+1].append(lg) 
+                l += 2            
+            r += 1
+        t.classified1 = (DF[r][0])
+        for v in DF[r-1]:
+            if v != (DF[r][0]):
+                t.classified2 = (v)
+        t.save()
+        return DF
+
+    def combat(t, L1, L2):
         rL1 = 0
         rL2 = 0
-
-        while ((rL1<2) or (rL2 < 2)):
-            pL1 = random.randint(0, L1.strength) * Tournament.strengthWeigth + random.randint(0, L1.dexterity) * Tournament.dexterityWeigth + random.randint(0, L1.resistance) * Tournament.resistanceWeigth
-            pL2 = random.randint(0, L2.strength) * Tournament.strengthWeigth + random.randint(0, L2.dexterity) * Tournament.dexterityWeigth + random.randint(0, L2.resistance) * Tournament.resistanceWeigth
+        
+        while ((rL1 < 2) or (rL2 < 2)):
+            pL1 = random.randint(0, L1.strength) * t.strengthWeigth + random.randint(0, L1.dexterity) * t.dexterityWeigth + random.randint(0, L1.resistance) * t.resistanceWeigth
+            pL2 = random.randint(0, L2.strength) * t.strengthWeigth + random.randint(0, L2.dexterity) * t.dexterityWeigth + random.randint(0, L2.resistance) * t.resistanceWeigth
 
             print(pL1)
             print(pL2)
@@ -67,26 +93,6 @@ class Tournament(models.Model):
                    if (rL2 == 2):
                     print('Luchador 2 gana el combate')
                     return L2
-
-
-    def celebrateTournament(t_id):
-        print('Empezamos')
-        DF = dict()
-        r = 1
-        t = Tournament(t_id)
-        f = t.fighters.all()
-        dup={r:list(f)}
-        DF.update(dup)
-          
-        while r <= t.numberRounds:
-            l = 1
-            dp={r+1:list()}
-            DF.update(dp)
-            while l <= len(DF[r]):
-                lg = []
-                lg += [t.combat(l, l +1) for l in DF[r][:len(DF[r]):2]]
-            r += 1
-        return DF
 
 
 

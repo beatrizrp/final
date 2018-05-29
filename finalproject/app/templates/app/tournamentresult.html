@@ -6,10 +6,11 @@
 
 {% csrf_token %}
 
-<table>
-        {% for key,v in data %}
+<table class ="table table-condensed">
+        {% for k, v in data.items %}
             <tr>
-                <td> {{ key }} : </td> <td> {{ value }} </td>
+                <td>RONDA: {{ k }}</td>
+                <td>{{ v }}</td>
             </tr>
         {% endfor %}
 
